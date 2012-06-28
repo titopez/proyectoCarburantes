@@ -22,7 +22,7 @@ public class JFEliminarVendedorA extends javax.swing.JFrame {
     /**
      * Creates new form JFEliminarVendedorA
      */
-    private DefaultTableModel modelo ;
+    private DefaultTableModel modelo=new DefaultTableModel() ;
     public JFEliminarVendedorA() {
         initComponents();
     }
@@ -145,13 +145,14 @@ public class JFEliminarVendedorA extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        modelo=(DefaultTableModel) this.jTable1.getModel();
+        modelo.setRowCount(0);
         String apellido = jTextField2.getText();
         VendedorControl vControl = new VendedorControl();
         List<Vendedor> v = vControl.buscarPorApellidos(apellido);
-        if (v == null) {
+        if (v.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No existe vendedores", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            modelo = (DefaultTableModel) this.jTable1.getModel();
             Object[] vendedores = new Object[6];
             for (int i = 0; i <= v.size() - 1; i++) {
                 Vendedor ve = v.get(i);
@@ -169,7 +170,6 @@ public class JFEliminarVendedorA extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        // crear un objeto tipo vendedor para enviar a GenericaCtrlDao->GeneraicaDAO->DB
         byte tipo = 0;
         int fila = jTable1.getSelectedRow();
         String cuenta=jTable1.getValueAt(fila, 3).toString();
@@ -179,7 +179,6 @@ public class JFEliminarVendedorA extends javax.swing.JFrame {
         uControl.eliminar(us);
         JOptionPane.showMessageDialog(null, "Vendedor eliminado correctamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         jTextField2.setText("");
-        //jTextField2.selectAll();
         jTextField2.requestFocus();
         modelo.setRowCount(0);
     }//GEN-LAST:event_jButton2ActionPerformed
