@@ -4,6 +4,12 @@
  */
 package vista;
 
+import controlador.ClienteControl;
+import controlador.PlacaControl;
+import java.util.List;
+import javax.swing.JOptionPane;
+import modelo.Cliente;
+import modelo.Placa;
 import modelo.Vendedor;
 
 /**
@@ -16,13 +22,15 @@ public class JFPrincipalV extends javax.swing.JFrame {
      * Creates new form JFPrincipalV
      */
     private Vendedor v;
+    private Cliente cliente=new Cliente();
+
     public JFPrincipalV() {
         initComponents();
     }
-    
+
     public JFPrincipalV(Vendedor v) {
         initComponents();
-        this.v=v;
+        this.v = v;
     }
 
     /**
@@ -112,15 +120,30 @@ public class JFPrincipalV extends javax.swing.JFrame {
         jLabel11.setText("Placa:");
 
         jComboBox1.setEditable(true);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Buscar");
 
         jButton4.setText("Registrar");
+        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel12.setText("Cantidad(Litros):");
@@ -352,7 +375,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        JFAutenticacion jfAutenticacion=new JFAutenticacion();
+        JFAutenticacion jfAutenticacion = new JFAutenticacion();
         jfAutenticacion.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -363,15 +386,86 @@ public class JFPrincipalV extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        JFDatosPersonalesV jfDatosPV=new JFDatosPersonalesV(v);
+        JFDatosPersonalesV jfDatosPV = new JFDatosPersonalesV(v);
         jfDatosPV.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        JFConsultarVentasV jfConsultarVV=new JFConsultarVentasV();
+        JFConsultarVentasV jfConsultarVV = new JFConsultarVentasV();
         jfConsultarVV.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        PlacaControl pControl=new PlacaControl();
+        Placa p;
+        if (cliente == null) {
+            String nombre = jTextField1.getText();
+            String apellido = jTextField1.getText();
+            int nit = Integer.valueOf(jTextField3.getText());
+            int ci = Integer.valueOf(jTextField4.getText());
+            int placa = Integer.valueOf(jComboBox1.getSelectedItem().toString());
+            Cliente c = new Cliente(nombre, apellido, nit, ci);
+            ClienteControl cControl = new ClienteControl();
+            cControl.salvar(c);
+            p = new Placa(placa, c);
+            pControl.salvar(p);  
+            JOptionPane.showMessageDialog(null, "Cliente nuevo registrado satisfactoriamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            int placa = Integer.valueOf(jComboBox1.getSelectedItem().toString());
+            p = new Placa(placa, cliente);
+            pControl.salvar(p);
+            JOptionPane.showMessageDialog(null, "Nueva placa para: "+jTextField1.getText()+" "+jTextField2.getText()+" Registrado", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int nit = Integer.valueOf(jTextField3.getText());
+        ClienteControl cControl = new ClienteControl();
+        cliente = cControl.buscarPorNit(nit);
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(null, "No existe cliente", "Error", JOptionPane.ERROR_MESSAGE);
+            jButton4.setEnabled(true);
+            jTextField1.setFocusable(true);
+        } else {
+            PlacaControl pControl = new PlacaControl();
+            List<Placa> placas = pControl.buscarPorId(Long.valueOf(cliente.getId()));
+            jTextField1.setText(cliente.getNombre());
+            jTextField2.setText(cliente.getApellidos());
+            jTextField3.setText(String.valueOf(cliente.getNit()));
+            jTextField4.setText(String.valueOf(cliente.getCi()));
+            for (int i = 0; i < placas.size(); i++) {
+                jComboBox1.addItem(placas.get(i).getNumero());
+            }
+            jButton4.setEnabled(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int ci = Integer.valueOf(jTextField4.getText());
+        ClienteControl cControl = new ClienteControl();
+        cliente = cControl.buscarPorCi(ci);
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(null, "No existe cliente", "Error", JOptionPane.ERROR_MESSAGE);
+            jButton4.setEnabled(true);
+            jTextField1.setFocusable(true);
+        } else {
+            PlacaControl pControl = new PlacaControl();
+            List<Placa> placas = pControl.buscarPorId(Long.valueOf(cliente.getId()));
+            jTextField1.setText(cliente.getNombre());
+            jTextField2.setText(cliente.getApellidos());
+            jTextField3.setText(String.valueOf(cliente.getNit()));
+            jTextField4.setText(String.valueOf(cliente.getCi()));
+            for (int i = 0; i < placas.size(); i++) {
+                jComboBox1.addItem(placas.get(i).getNumero());
+            }
+            jButton4.setEnabled(true);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

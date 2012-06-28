@@ -35,21 +35,4 @@ public class UsuarioDAO {
         return u;      
     }
     
-//    public int obtenerId(String pass){
-//        SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-//        Session sesion = sessionFactory.openSession();
-//
-//        Transaction tx = sesion.beginTransaction();
-//
-//        int id;
-//
-//        String consulta = "select id from Vendedor as v  WHERE v.contrasenia = :contrasenia";
-//        Query q = sesion.createQuery(consulta);
-//        q.setString("contrasenia", pass);
-//        id = (Integer)q.uniqueResult();
-//
-//        tx.commit();
-//        sesion.close();
-//        return id;
-//    }
 }
