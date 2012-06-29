@@ -4,6 +4,12 @@
  */
 package vista;
 
+import controlador.VendedorControl;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Vendedor;
+
 /**
  *
  * @author Roberto
@@ -13,6 +19,8 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
     /**
      * Creates new form JFListarVendedoresA
      */
+     private DefaultTableModel modelo=new DefaultTableModel() ;
+    
     public JFListarVendedoresA() {
         initComponents();
     }
@@ -35,6 +43,11 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lista de Vendedores");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jButton4.setText("Cerrar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +88,11 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
                 "id", "Nombre", "Apellido", "Turno", "Tipo", "Usuario"
             }
         ));
+        jTable1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jTable1ComponentShown(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,6 +155,38 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
         JFEliminarVendedorA jfElVenA=new JFEliminarVendedorA();
         jfElVenA.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTable1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTable1ComponentShown
+       
+        
+    }//GEN-LAST:event_jTable1ComponentShown
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        
+        
+        modelo=(DefaultTableModel) this.jTable1.getModel();
+        modelo.setRowCount(0);
+//        String apellido = jTextField2.getText();
+        VendedorControl vControl = new VendedorControl();
+        List<Vendedor> v = vControl.listar();
+        if (v.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No existe vendedores", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Object[] vendedores = new Object[6];
+            for (int i = 0; i <= v.size() - 1; i++) {
+                Vendedor ve = v.get(i);
+                vendedores[0] = ve.getNombre();
+                vendedores[1] = ve.getApellidos();
+                vendedores[2] = ve.getNit();
+                vendedores[3] = ve.getCuenta();
+                vendedores[4] = ve.getContrasenia();
+                vendedores[5] = ve.getTurno();
+                modelo.addRow(vendedores);
+            }
+        }
+        
+        
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

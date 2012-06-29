@@ -30,6 +30,11 @@ public class VendedorControl extends GenericaControl{
         return vendedor.buscarVendedorAp(apellido);
     }
     
+    public List<Vendedor> listar(){
+        return vendedor.getAll();
+    }
+    
+    
 //    public int obtenerId(String pass){
 //        return vendedor.obtenerId(pass);
 //    }

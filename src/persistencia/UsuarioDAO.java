@@ -4,7 +4,9 @@
  */
 package persistencia;
 
+import java.util.List;
 import modelo.Usuario;
+import modelo.Vendedor;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,5 +36,26 @@ public class UsuarioDAO {
         sesion.close();
         return u;      
     }
+
+    public List<Usuario> getAll() {
+//        throw new UnsupportedOperationException("Not yet implemented");
+        
+        SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+        Session sesion = sessionFactory.openSession();
+
+        Transaction tx = sesion.beginTransaction();
+
+        List<Usuario> u = null;
+
+        String consulta = "from Usuario";
+        Query q = sesion.createQuery(consulta);
+        u = (List<Usuario>) q.list();
+
+        tx.commit();
+        sesion.close();
+        return u;
+    }
+    
+    
     
 }
