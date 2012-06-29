@@ -118,16 +118,14 @@ public class JFListarUsuariosA extends javax.swing.JFrame {
         this.dispose();
 
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // mostrar usuarios = adms. y vendors.
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {
         
         modelo=(DefaultTableModel) this.jTable1.getModel();
         modelo.setRowCount(0);
-//        String apellido = jTextField2.getText();
         UsuarioControl uControl = new UsuarioControl();
-        List<Usuario> u = uControl.listar();
+        List<Usuario> u = uControl.getAll();
         if (u.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No existe usuarios", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -142,10 +140,10 @@ public class JFListarUsuariosA extends javax.swing.JFrame {
                 usuarios[5] = us.getContrasenia();
               usuarios[6] = us.getTipo();
                 modelo.addRow(usuarios);
-            }// end for
+            }
         }
         
-    }//GEN-LAST:event_formWindowActivated
+    }
 
     /**
      * @param args the command line arguments

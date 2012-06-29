@@ -4,6 +4,11 @@
  */
 package vista;
 
+import controlador.ProductoControl;
+import java.util.List;
+import javax.swing.JOptionPane;
+import modelo.Producto;
+
 /**
  *
  * @author Roberto
@@ -39,10 +44,21 @@ public class JFModificarProductoA extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Modificar Precio");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel1.setText("Precio:");
 
         jButton1.setText("Guardar Cambios");
+        jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -55,7 +71,16 @@ public class JFModificarProductoA extends javax.swing.JFrame {
 
         jLabel2.setText("Producto:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gasolina", "Diesel" }));
+        jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox1MouseClicked(evt);
+            }
+        });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Costo:");
 
@@ -141,12 +166,61 @@ public class JFModificarProductoA extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         jTextField1.setEditable(true);
+        jButton1.setEnabled(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         jTextField2.setEditable(true);
+        jButton1.setEnabled(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        List<Producto> productos = pControl.getAll();
+        if (!productos.isEmpty()) {
+            for (int i = 0; i < productos.size(); i++) {
+                jComboBox1.addItem(productos.get(i).getNombre());
+            }
+        }
+        String nombre=jComboBox1.getSelectedItem().toString();
+        Producto p=pControl.buscarPorNombre(nombre);
+        jTextField1.setText(String.valueOf(p.getPrecio()));
+        jTextField2.setText(String.valueOf(p.getCosto()));
+    }//GEN-LAST:event_formComponentShown
+
+    private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        String nombre=jComboBox1.getSelectedItem().toString();
+        Producto p=pControl.buscarPorNombre(nombre);
+        jTextField1.setText(String.valueOf(p.getPrecio()));
+        jTextField2.setText(String.valueOf(p.getCosto()));
+    }//GEN-LAST:event_jComboBox1MouseClicked
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        String nombre=jComboBox1.getSelectedItem().toString();
+        Producto p=pControl.buscarPorNombre(nombre);
+        jTextField1.setText(String.valueOf(p.getPrecio()));
+        jTextField2.setText(String.valueOf(p.getCosto()));
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        String nombre=jComboBox1.getSelectedItem().toString();
+        Producto p=pControl.buscarPorNombre(nombre);
+        p.setPrecio(Double.valueOf(jTextField1.getText()));
+        p.setCosto(Double.valueOf(jTextField2.getText()));
+        pControl.salvar(p);
+        JOptionPane.showMessageDialog(null, "Datos modificados correctamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

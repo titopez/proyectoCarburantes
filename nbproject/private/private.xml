@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/vista/JFPrincipalV.java</file>
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/modelo/Producto.java</file>
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/controlador/ProductoControl.java</file>
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/persistencia/ProductoDAO.java</file>
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/vista/JFEliminarProductoA.java</file>
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/vista/JFModificarProductoA.java</file>
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/vista/JFIngresarNOrdenA.java</file>
+        <file>file:/G:/Tito/MisDocumentos/SIS324/2012/ProyectoFinal/Proyecto/src/vista/JFAniadirProductoA.java</file>
+    </open-files>
 </project-private>

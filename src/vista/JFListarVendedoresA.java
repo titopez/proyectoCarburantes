@@ -4,22 +4,22 @@
  */
 package vista;
 
+/**
+ *
+ * @author Roberto
+ */
 import controlador.VendedorControl;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Vendedor;
 
-/**
- *
- * @author Roberto
- */
 public class JFListarVendedoresA extends javax.swing.JFrame {
 
     /**
      * Creates new form JFListarVendedoresA
      */
-     private DefaultTableModel modelo=new DefaultTableModel() ;
+    private DefaultTableModel modelo=new DefaultTableModel() ;
     
     public JFListarVendedoresA() {
         initComponents();
@@ -88,11 +88,6 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
                 "id", "Nombre", "Apellido", "Turno", "Tipo", "Usuario"
             }
         ));
-        jTable1.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                jTable1ComponentShown(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,19 +151,13 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
         jfElVenA.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTable1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTable1ComponentShown
-       
-        
-    }//GEN-LAST:event_jTable1ComponentShown
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        
-        
+        // TODO add your handling code here:
         modelo=(DefaultTableModel) this.jTable1.getModel();
         modelo.setRowCount(0);
 //        String apellido = jTextField2.getText();
         VendedorControl vControl = new VendedorControl();
-        List<Vendedor> v = vControl.listar();
+        List<Vendedor> v = vControl.getAll();
         if (v.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No existe vendedores", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -183,11 +172,12 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
                 vendedores[5] = ve.getTurno();
                 modelo.addRow(vendedores);
             }
-        }
+    }//GEN-LAST:event_formWindowActivated
+
+   
         
         
     }//GEN-LAST:event_formWindowActivated
-
     /**
      * @param args the command line arguments
      */

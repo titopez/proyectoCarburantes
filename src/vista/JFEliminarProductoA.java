@@ -4,6 +4,11 @@
  */
 package vista;
 
+import controlador.ProductoControl;
+import java.util.List;
+import javax.swing.JOptionPane;
+import modelo.Producto;
+
 /**
  *
  * @author Roberto
@@ -33,10 +38,20 @@ public class JFEliminarProductoA extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nuevo Costo");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel1.setText("Producto a eliminar:");
 
         jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -45,7 +60,11 @@ public class JFEliminarProductoA extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gasolina", "Diesel" }));
+        jComboBox1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jComboBox1ComponentShown(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,8 +81,8 @@ public class JFEliminarProductoA extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,6 +105,40 @@ public class JFEliminarProductoA extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jComboBox1ComponentShown
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        List<Producto> productos = pControl.getAll();
+        if (!productos.isEmpty()) {
+            for (int i = 0; i < productos.size(); i++) {
+                jComboBox1.addItem(productos.get(i).getNombre());
+            }
+        }
+    }//GEN-LAST:event_jComboBox1ComponentShown
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        String nombre = jComboBox1.getSelectedItem().toString();
+        int elemento=jComboBox1.getSelectedIndex();
+        Producto p = pControl.buscarPorNombre(nombre);
+        pControl.eliminar(p);
+        JOptionPane.showMessageDialog(null, "Producto eliminado correctamentes", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        jComboBox1.removeItemAt(elemento);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        List<Producto> productos = pControl.getAll();
+        if (!productos.isEmpty()) {
+            for (int i = 0; i < productos.size(); i++) {
+                jComboBox1.addItem(productos.get(i).getNombre());
+            }
+        }
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments

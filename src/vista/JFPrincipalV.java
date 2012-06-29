@@ -6,10 +6,12 @@ package vista;
 
 import controlador.ClienteControl;
 import controlador.PlacaControl;
+import controlador.ProductoControl;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Cliente;
 import modelo.Placa;
+import modelo.Producto;
 import modelo.Vendedor;
 
 /**
@@ -22,7 +24,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
      * Creates new form JFPrincipalV
      */
     private Vendedor v;
-    private Cliente cliente=new Cliente();
+    private Cliente cliente = new Cliente();
 
     public JFPrincipalV() {
         initComponents();
@@ -83,6 +85,11 @@ public class JFPrincipalV extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Factura"));
 
@@ -157,9 +164,19 @@ public class JFPrincipalV extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel15.setText("Precio Total:");
 
+        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField6KeyReleased(evt);
+            }
+        });
+
         jTextField8.setEditable(false);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gasolina", "Diesel" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,9 +200,9 @@ public class JFPrincipalV extends javax.swing.JFrame {
                                             .addComponent(jLabel13)
                                             .addComponent(jLabel12))
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(25, 25, 25)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -398,7 +415,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        PlacaControl pControl=new PlacaControl();
+        PlacaControl pControl = new PlacaControl();
         Placa p;
         if (cliente == null) {
             String nombre = jTextField1.getText();
@@ -410,13 +427,13 @@ public class JFPrincipalV extends javax.swing.JFrame {
             ClienteControl cControl = new ClienteControl();
             cControl.salvar(c);
             p = new Placa(placa, c);
-            pControl.salvar(p);  
+            pControl.salvar(p);
             JOptionPane.showMessageDialog(null, "Cliente nuevo registrado satisfactoriamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else {
             int placa = Integer.valueOf(jComboBox1.getSelectedItem().toString());
             p = new Placa(placa, cliente);
             pControl.salvar(p);
-            JOptionPane.showMessageDialog(null, "Nueva placa para: "+jTextField1.getText()+" "+jTextField2.getText()+" Registrado", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nueva placa para: " + jTextField1.getText() + " " + jTextField2.getText() + " Registrado", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -431,6 +448,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
             jButton4.setEnabled(true);
             jTextField1.setFocusable(true);
         } else {
+            jComboBox1.removeAllItems();
             PlacaControl pControl = new PlacaControl();
             List<Placa> placas = pControl.buscarPorId(Long.valueOf(cliente.getId()));
             jTextField1.setText(cliente.getNombre());
@@ -454,6 +472,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
             jButton4.setEnabled(true);
             jTextField1.setFocusable(true);
         } else {
+            jComboBox1.removeAllItems();
             PlacaControl pControl = new PlacaControl();
             List<Placa> placas = pControl.buscarPorId(Long.valueOf(cliente.getId()));
             jTextField1.setText(cliente.getNombre());
@@ -466,6 +485,36 @@ public class JFPrincipalV extends javax.swing.JFrame {
             jButton4.setEnabled(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        List<Producto> productos = pControl.getAll();
+        if (!productos.isEmpty()) {
+            for (int i = 0; i < productos.size(); i++) {
+                jComboBox2.addItem(productos.get(i).getNombre());
+            }
+        }
+    }//GEN-LAST:event_formComponentShown
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        ProductoControl pControl = new ProductoControl();
+        String nombre = jComboBox2.getSelectedItem().toString();
+        Producto p = pControl.buscarPorNombre(nombre);
+        jTextField8.setText(String.valueOf(p.getPrecio()));
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jTextField6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyReleased
+        // TODO add your handling code here:
+        if (!this.jTextField6.getText().equals("")) {
+            int cantidad = Integer.valueOf(jTextField6.getText());
+            double precio = Double.valueOf(jTextField8.getText());
+            ProductoControl pControl = new ProductoControl();
+            double total = pControl.calcularTotal(cantidad, precio);
+            jTextField9.setText(String.valueOf(total));
+        }
+    }//GEN-LAST:event_jTextField6KeyReleased
 
     /**
      * @param args the command line arguments

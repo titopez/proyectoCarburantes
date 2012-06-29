@@ -7,8 +7,6 @@ package vista;
 import controlador.AdministradorControl;
 import controlador.UsuarioControl;
 import controlador.VendedorControl;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Administrador;
 import modelo.Usuario;
@@ -25,7 +23,6 @@ public class JFAutenticacion extends javax.swing.JFrame {
      */
     public JFAutenticacion() {
         initComponents();
-        cargarFondo();
     }
 
     /**
@@ -129,17 +126,7 @@ public class JFAutenticacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- public void cargarFondo()
-    {
-   Image img = new ImageIcon(getClass().getResource("../imagenes/candado-th.png")).getImage();
-//this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("imagenes/satelite.jpg")));
-   //   this.jPanel1.add( (object) img);
-//   this.jPanel1.;
-   this.setIconImage(img);
-   this.repaint();
-   ImageIcon fondo = new ImageIcon("/imagenes/tierra.jpg");
 
-    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         System.exit(0);

@@ -4,6 +4,13 @@
  */
 package vista;
 
+import controlador.ProductoControl;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Producto;
+import modelo.Vendedor;
+
 /**
  *
  * @author Roberto
@@ -13,6 +20,7 @@ public class JFListarProductosA extends javax.swing.JFrame {
     /**
      * Creates new form JFListarProductosA
      */
+    private DefaultTableModel modelo=new DefaultTableModel();
     public JFListarProductosA() {
         initComponents();
     }
@@ -32,16 +40,21 @@ public class JFListarProductosA extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lista de Productos");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Precio", "Costo"
+                "Nombre", "Precio", "Costo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -83,6 +96,26 @@ public class JFListarProductosA extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        modelo=(DefaultTableModel) this.jTable1.getModel();
+        modelo.setRowCount(0);
+        ProductoControl pControl=new ProductoControl();       
+        List<Producto> productos=pControl.getAll();
+        if (productos.isEmpty()) {
+            modelo.setRowCount(0);
+        } else {
+            Object[] prod = new Object[3];
+            for (int i = 0; i <= productos.size() - 1; i++) {
+                Producto p = productos.get(i);
+                prod[0] = p.getNombre();
+                prod[1] = p.getPrecio();
+                prod[2] = p.getCosto();
+                modelo.addRow(prod);
+            }
+        }
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments

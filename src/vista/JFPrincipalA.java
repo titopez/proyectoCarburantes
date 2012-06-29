@@ -460,7 +460,7 @@ public class JFPrincipalA extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem17);
 
-        jMenuItem18.setText("Usuarios sistema");
+        jMenuItem18.setText("Usuarios Sistema");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
@@ -683,10 +683,9 @@ public class JFPrincipalA extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        // lista de los usuarios del sistema:
+        // TODO add your handling code here:
         JFListarUsuariosA jfListarU = new JFListarUsuariosA();
         jfListarU.setVisible(true);
-        
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     /**

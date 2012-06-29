@@ -6,7 +6,6 @@ package controlador;
 
 import java.util.List;
 import modelo.Usuario;
-import modelo.Vendedor;
 import persistencia.UsuarioDAO;
 
 /**
@@ -14,20 +13,18 @@ import persistencia.UsuarioDAO;
  * @author Roberto
  */
 public class UsuarioControl extends GenericaControl {
+
     UsuarioDAO usuario;
-    public UsuarioControl(){
-        usuario=new UsuarioDAO();
+
+    public UsuarioControl() {
+        usuario = new UsuarioDAO();
     }
-    
-    public Usuario buscarUsuario(String c, String p){
+
+    public Usuario buscarUsuario(String c, String p) {
         return usuario.buscarUsuario(c, p);
     }
-    
-     public List<Usuario> listar(){
+
+    public List<Usuario> getAll() {
         return usuario.getAll();
     }
-    
-//    public int obtenerId(String pass){
-//        return usuario.obtenerId(pass);
-//    } 
 }
