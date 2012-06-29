@@ -12,7 +12,8 @@ public class GeneraCodigoCtrlControl {
 
     public GeneraCodigoCtrlControl() {
     }
-    
+    // por el momento le enviamos los parametros que se requiere segun impuestos internos y
+    // devuelve el mismo codigo de control solo para pruebas..
     public String generar( int num_Autorizacion, int num_Factura, int nit_ci, String fecha_transaccion, int monto)
     {
       String cod="6A-DC-53-05-14";
@@ -39,13 +40,13 @@ public class GeneraCodigoCtrlControl {
         return  cod;
      } 
     
-    public static void main(String args[]){
-    
-    String numHexadecimal;
-    GeneraCodigoCtrlControl gen= new GeneraCodigoCtrlControl();
-    numHexadecimal = gen.generar(5,9,19,"la",59);
-   
-    
-    }
+//    public static void main(String args[]){
+//    
+//    String numHexadecimal;
+//    GeneraCodigoCtrlControl gen= new GeneraCodigoCtrlControl();
+//    numHexadecimal = gen.generar(5,9,19,"la",59);
+//   
+//    
+//    }
 }
 
