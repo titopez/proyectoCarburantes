@@ -14,7 +14,8 @@ public class Factura implements Serializable {
     private String codControl; 
     @Temporal(TemporalType.DATE)
     private Date fechaEmision;
-    private int cantidad;
+    private double bolivianos;
+    private double cantidad;
     private double precioTotal;
     private boolean estado;
     @ManyToOne
@@ -29,13 +30,14 @@ public class Factura implements Serializable {
     public Factura() {
     }
 
-    public Factura(int numero, String codControl, int cantidad, double precioTotal, boolean estado, Date fechaEmision)  {
+    public Factura(int numero, String codControl, double bolivianos, double cantidad, double precioTotal, boolean estado, Date fechaEmision)  {
         this.numero = numero;
         this.codControl = codControl;
         this.cantidad = cantidad;
         this.precioTotal = precioTotal;
         this.estado = estado;
         this.fechaEmision=fechaEmision;
+        this.bolivianos=bolivianos;
     }
     
     public long getId() {
@@ -43,11 +45,11 @@ public class Factura implements Serializable {
     }
 
     
-    public int getCantidad() {
+    public double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -117,6 +119,14 @@ public class Factura implements Serializable {
 
     public void setOrden(OrdenFact orden) {
         this.orden = orden;
+    }
+
+    public double getBolivianos() {
+        return bolivianos;
+    }
+
+    public void setBolivianos(double bolivianos) {
+        this.bolivianos = bolivianos;
     }
 
     @Override

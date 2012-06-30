@@ -26,8 +26,12 @@ public class ProductoControl extends GenericaControl{
         return producto.buscarPorNombre(nombre);
     }
     
-    public double calcularTotal(int cantidad, double precio){
+    public double calcularTotalCant(int cantidad, double precio){
         return cantidad*precio;
+    }
+    
+    public double calcularTotalBol(double bolivianos, double precio){
+        return Math.round((bolivianos/precio)*100000)/100000;
     }
     
 }
