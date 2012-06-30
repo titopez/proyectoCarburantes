@@ -37,10 +37,6 @@ public class Factura implements Serializable {
         this.estado = estado;
         this.fechaEmision=fechaEmision;
     }
-
-//    public void calcularCantVendida(){
-//        
-//    }
     
     public long getId() {
         return id;
@@ -113,6 +109,14 @@ public class Factura implements Serializable {
 
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
+    }
+
+    public OrdenFact getOrden() {
+        return orden;
+    }
+
+    public void setOrden(OrdenFact orden) {
+        this.orden = orden;
     }
 
     @Override

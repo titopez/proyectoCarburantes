@@ -4,15 +4,11 @@
  */
 package vista;
 
-import controlador.ClienteControl;
-import controlador.PlacaControl;
-import controlador.ProductoControl;
+import controlador.*;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import modelo.Cliente;
-import modelo.Placa;
-import modelo.Producto;
-import modelo.Vendedor;
+import modelo.*;
 
 /**
  *
@@ -25,7 +21,10 @@ public class JFPrincipalV extends javax.swing.JFrame {
      */
     private Vendedor v;
     private Cliente cliente = new Cliente();
-
+    private Cliente c = new Cliente();
+    private OrdenFact ordenFact=new OrdenFact();
+    private OrdenFact ordenFactA=new OrdenFact();
+    private int numero;
     public JFPrincipalV() {
         initComponents();
     }
@@ -75,6 +74,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton5 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -242,12 +242,17 @@ public class JFPrincipalV extends javax.swing.JFrame {
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))
-                        .addGap(39, 39, 39))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton1)
+                                    .addComponent(jButton2)
+                                    .addComponent(jButton3)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(27, 27, 27))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addGap(137, 137, 137))))
@@ -270,9 +275,11 @@ public class JFPrincipalV extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -318,6 +325,11 @@ public class JFPrincipalV extends javax.swing.JFrame {
         );
 
         jButton5.setText("Imprimir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Sistema");
 
@@ -423,7 +435,8 @@ public class JFPrincipalV extends javax.swing.JFrame {
             int nit = Integer.valueOf(jTextField3.getText());
             int ci = Integer.valueOf(jTextField4.getText());
             int placa = Integer.valueOf(jComboBox1.getSelectedItem().toString());
-            Cliente c = new Cliente(nombre, apellido, nit, ci);
+            //Cliente c = new Cliente(nombre, apellido, nit, ci);
+            c = new Cliente(nombre, apellido, nit, ci);
             ClienteControl cControl = new ClienteControl();
             cControl.salvar(c);
             p = new Placa(placa, c);
@@ -495,8 +508,16 @@ public class JFPrincipalV extends javax.swing.JFrame {
                 jComboBox2.addItem(productos.get(i).getNombre());
             }
         }
+        controlarNumeros();
     }//GEN-LAST:event_formComponentShown
 
+    public void controlarNumeros(){  
+        byte estado=1;
+        OrdenFacturaControl ofControl=new OrdenFacturaControl();
+        ordenFact=ofControl.buscarPorEstado(estado);     
+        numero=ordenFact.getContador();
+        jLabel5.setText(String.valueOf(numero));
+    }
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
         ProductoControl pControl = new ProductoControl();
@@ -515,6 +536,40 @@ public class JFPrincipalV extends javax.swing.JFrame {
             jTextField9.setText(String.valueOf(total));
         }
     }//GEN-LAST:event_jTextField6KeyReleased
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        byte activo=1;
+        byte inactivo=0;
+        FacturaControl fControl =new FacturaControl();
+        OrdenFacturaControl ofControl=new OrdenFacturaControl();
+        int numero=Integer.valueOf(jLabel5.getText());
+        String codigo=jLabel6.getText();
+        int cantidad=Integer.valueOf(jTextField6.getText());
+        double pTotal=Double.valueOf(jTextField9.getText());
+        boolean estado=true;
+        Date fActual=jDateChooser1.getDate();
+        Factura factura=new Factura(numero, codigo, cantidad, pTotal, estado, fActual);
+        if (cliente!=null)
+            factura.setCliente(cliente);
+        else
+            factura.setCliente(c);
+        ProductoControl pControl=new ProductoControl();
+        Producto producto=pControl.buscarPorNombre(jComboBox2.getSelectedItem().toString());
+        factura.setProducto(producto);
+        factura.setVendedor(this.v);      
+        factura.setOrden(ordenFact);
+        JOptionPane.showMessageDialog(null, "Factura impresa", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        ordenFact.setContador(numero+1);
+        if (ordenFact.getContador()>ordenFact.getLimiteSup()){
+            long id=ordenFact.getId();
+            ordenFactA =ofControl.buscarPorId(id+1);
+            ordenFact.setEstado(inactivo);
+            ordenFactA.setEstado(activo);
+            ordenFact=ordenFactA;
+        }
+        controlarNumeros();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -565,6 +620,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -14,27 +14,28 @@ public class OrdenFact implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private long numOrden;
-    private double limiteInf;
-    private double limiteSup;
+    private int limiteInf;
+    private int limiteSup;
     @Temporal(TemporalType.DATE)
     private Date fechaLimite;
+    @Transient
+    private int contador;
+    private byte estado;
     
     public OrdenFact() {
     }
 
-    public OrdenFact(long numOrden, double limiteInf, double limiteSup, Date fechaLimite) {
+    public OrdenFact(long numOrden, int limiteInf, int limiteSup, Date fechaLimite, byte estado) {
         this.numOrden = numOrden;
         this.limiteInf = limiteInf;
         this.limiteSup = limiteSup;
         this.fechaLimite = fechaLimite;
+        this.contador=limiteInf;
+        this.estado=estado;
     }
 
     public long getId() {
         return id;
-    }
-
-    private void setId(long id) {
-        this.id = id;
     }
 
     public Date getFechaLimite() {
@@ -57,16 +58,32 @@ public class OrdenFact implements Serializable {
         this.fechaLimite = fechaLimite;
     }
 
-    public void setLimiteInf(double limiteInf) {
+    public void setLimiteInf(int limiteInf) {
         this.limiteInf = limiteInf;
     }
 
-    public void setLimiteSup(double limiteSup) {
+    public void setLimiteSup(int limiteSup) {
         this.limiteSup = limiteSup;
     }
 
     public void setNumOrden(long numOrden) {
         this.numOrden = numOrden;
+    }
+
+    public int getContador() {
+        return contador;
+    }
+
+    public void setContador(int contador) {
+        this.contador = contador;
+    }
+
+    public byte getEstado() {
+        return estado;
+    }
+
+    public void setEstado(byte estado) {
+        this.estado = estado;
     }
 
     @Override
