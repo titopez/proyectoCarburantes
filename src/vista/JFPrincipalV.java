@@ -143,6 +143,11 @@ public class JFPrincipalV extends javax.swing.JFrame {
         });
 
         jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Registrar");
         jButton4.setEnabled(false);
@@ -431,7 +436,7 @@ public class JFPrincipalV extends javax.swing.JFrame {
         Placa p;
         if (cliente == null) {
             String nombre = jTextField1.getText();
-            String apellido = jTextField1.getText();
+            String apellido = jTextField2.getText();
             int nit = Integer.valueOf(jTextField3.getText());
             int ci = Integer.valueOf(jTextField4.getText());
             int placa = Integer.valueOf(jComboBox1.getSelectedItem().toString());
@@ -514,9 +519,11 @@ public class JFPrincipalV extends javax.swing.JFrame {
     public void controlarNumeros(){  
         byte estado=1;
         OrdenFacturaControl ofControl=new OrdenFacturaControl();
-        ordenFact=ofControl.buscarPorEstado(estado);     
-        numero=ordenFact.getContador();
+        ordenFact=ofControl.buscarPorEstado(estado);    
+        numero=ordenFact.getContador();       
         jLabel5.setText(String.valueOf(numero));
+        FacturaControl fc=new FacturaControl();
+        jLabel6.setText(fc.obtenerCodControl());
     }
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
@@ -541,35 +548,45 @@ public class JFPrincipalV extends javax.swing.JFrame {
         // TODO add your handling code here:
         byte activo=1;
         byte inactivo=0;
-        FacturaControl fControl =new FacturaControl();
+        //FacturaControl fControl =new FacturaControl();
         OrdenFacturaControl ofControl=new OrdenFacturaControl();
-        int numero=Integer.valueOf(jLabel5.getText());
-        String codigo=jLabel6.getText();
-        int cantidad=Integer.valueOf(jTextField6.getText());
-        double pTotal=Double.valueOf(jTextField9.getText());
-        boolean estado=true;
-        Date fActual=jDateChooser1.getDate();
-        Factura factura=new Factura(numero, codigo, cantidad, pTotal, estado, fActual);
-        if (cliente!=null)
-            factura.setCliente(cliente);
-        else
-            factura.setCliente(c);
-        ProductoControl pControl=new ProductoControl();
-        Producto producto=pControl.buscarPorNombre(jComboBox2.getSelectedItem().toString());
-        factura.setProducto(producto);
-        factura.setVendedor(this.v);      
-        factura.setOrden(ordenFact);
+//        int numero=Integer.valueOf(jLabel5.getText());
+//        String codigo=jLabel6.getText();
+//        int cantidad=Integer.valueOf(jTextField6.getText());
+//        double pTotal=Double.valueOf(jTextField9.getText());
+//        boolean estado=true;
+//        Date fActual=jDateChooser1.getDate();
+//        Factura factura=new Factura(numero, codigo, cantidad, pTotal, estado, fActual);
+//        if (cliente!=null)
+//            factura.setCliente(cliente);
+//        else
+//            factura.setCliente(c);
+//        ProductoControl pControl=new ProductoControl();
+//        Producto producto=pControl.buscarPorNombre(jComboBox2.getSelectedItem().toString());
+//        factura.setProducto(producto);
+//        factura.setVendedor(this.v);      
+//        factura.setOrden(ordenFact);
+        
+        
         JOptionPane.showMessageDialog(null, "Factura impresa", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         ordenFact.setContador(numero+1);
+        ofControl.salvar(ordenFact);
         if (ordenFact.getContador()>ordenFact.getLimiteSup()){
             long id=ordenFact.getId();
             ordenFactA =ofControl.buscarPorId(id+1);
-            ordenFact.setEstado(inactivo);
             ordenFactA.setEstado(activo);
+            ofControl.salvar(ordenFactA);
+            ordenFact.setEstado(inactivo);
+            ofControl.salvar(ordenFact);          
             ordenFact=ordenFactA;
+            ofControl.salvar(ordenFact);
         }
         controlarNumeros();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

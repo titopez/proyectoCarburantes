@@ -25,7 +25,7 @@ public class OrdenFacturaDAO {
 
         OrdenFact of = null;
 
-        String consulta = "from OrdenFact as of  WHERE of.estado = :estado";
+        String consulta = "from OrdenFact as o WHERE o.estado = :estado";
         Query q = sesion.createQuery(consulta);
         q.setByte("estado", estado);
         of = (OrdenFact)q.uniqueResult();
@@ -43,7 +43,7 @@ public class OrdenFacturaDAO {
 
         OrdenFact of = null;
 
-        String consulta = "from OrdenFact as of  WHERE of.id = :id";
+        String consulta = "from OrdenFact as o WHERE o.id = :id";
         Query q = sesion.createQuery(consulta);
         q.setLong("id", id);
         of = (OrdenFact)q.uniqueResult();

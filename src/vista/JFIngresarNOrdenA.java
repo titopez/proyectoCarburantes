@@ -6,6 +6,7 @@ package vista;
 
 import controlador.GenericaControl;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import modelo.OrdenFact;
 
 /**
@@ -134,19 +135,18 @@ public class JFIngresarNOrdenA extends javax.swing.JFrame {
 //         enviar datos a DB para almacenarlos:
 //        IngresarNOrdenAControl inOCtrol = new IngresarNOrdenAControl();
         GenericaControl gCtrl = new GenericaControl();
-        OrdenFact ofact = new OrdenFact();
-       int numAut = Integer.parseInt( this.jTextField1.getText());        
-       int numInf = Integer.parseInt( this.jTextField2.getText());        
-       int numSup = Integer.parseInt( this.jTextField3.getText());        
-       Date fecha = this.jDateChooser1.getDate();
-       ofact.setNumOrden(numAut);
-       ofact.setLimiteInf(numInf);
-       ofact.setLimiteSup(numSup);
-       ofact.setFechaLimite(fecha);
-       
-       gCtrl.salvar(ofact);
-       dispose();
-        
+
+        byte estado = 0;
+        long numAut = Long.valueOf(this.jTextField1.getText());
+        int numInf = Integer.valueOf(this.jTextField2.getText());
+        int numSup = Integer.valueOf(this.jTextField3.getText());
+        Date fecha = this.jDateChooser1.getDate();
+        OrdenFact ofact = new OrdenFact(numAut, numInf, numSup, fecha, estado);
+        gCtrl.salvar(ofact);
+        JOptionPane.showMessageDialog(null, "Datos ingresados correctamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
