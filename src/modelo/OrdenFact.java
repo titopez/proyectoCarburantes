@@ -13,16 +13,16 @@ public class OrdenFact implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
-    private long numOrden;
-    private double limiteInf;
-    private double limiteSup;
+    protected long numOrden;
+    protected long limiteInf;
+    protected long limiteSup;
     @Temporal(TemporalType.DATE)
-    private Date fechaLimite;
+    protected Date fechaLimite;
     
     public OrdenFact() {
     }
 
-    public OrdenFact(long numOrden, double limiteInf, double limiteSup, Date fechaLimite) {
+    public OrdenFact(long numOrden, long limiteInf, long limiteSup, Date fechaLimite) {
         this.numOrden = numOrden;
         this.limiteInf = limiteInf;
         this.limiteSup = limiteSup;
@@ -33,19 +33,17 @@ public class OrdenFact implements Serializable {
         return id;
     }
 
-    private void setId(long id) {
-        this.id = id;
-    }
+   
 
     public Date getFechaLimite() {
         return fechaLimite;
     }
 
-    public double getLimiteInf() {
+    public long getLimiteInf() {
         return limiteInf;
     }
 
-    public double getLimiteSup() {
+    public long getLimiteSup() {
         return limiteSup;
     }
 
@@ -57,11 +55,11 @@ public class OrdenFact implements Serializable {
         this.fechaLimite = fechaLimite;
     }
 
-    public void setLimiteInf(double limiteInf) {
+    public void setLimiteInf(long limiteInf) {
         this.limiteInf = limiteInf;
     }
 
-    public void setLimiteSup(double limiteSup) {
+    public void setLimiteSup(long limiteSup) {
         this.limiteSup = limiteSup;
     }
 

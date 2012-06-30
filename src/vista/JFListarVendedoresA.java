@@ -79,15 +79,23 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Nombre", "Apellido", "Turno", "Tipo", "Usuario"
+                "Nº", "Nombre", "Apellido", "Nit", "Cuenta", "Contrasenia", "turno"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -161,18 +169,19 @@ public class JFListarVendedoresA extends javax.swing.JFrame {
         if (v.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No existe vendedores", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            Object[] vendedores = new Object[6];
+            Object[] vendedores = new Object[7];
             for (int i = 0; i <= v.size() - 1; i++) {
                 Vendedor ve = v.get(i);
-                vendedores[0] = ve.getNombre();
-                vendedores[1] = ve.getApellidos();
-                vendedores[2] = ve.getNit();
-                vendedores[3] = ve.getCuenta();
-                vendedores[4] = ve.getContrasenia();
-                vendedores[5] = ve.getTurno();
+                vendedores[0] = i+1 ;
+                vendedores[1] = ve.getNombre();
+                vendedores[2] = ve.getApellidos();
+                vendedores[3] = ve.getNit();
+                vendedores[4] = ve.getCuenta();
+                vendedores[5] = ve.getContrasenia();
+                vendedores[6] = ve.getTurno();
                 modelo.addRow(vendedores);
             }
-    }//GEN-LAST:event_formWindowActivated
+    }                                    
 
    
         
