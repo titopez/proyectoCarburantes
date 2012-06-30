@@ -4,6 +4,12 @@
  */
 package vista;
 
+import controlador.IngresarNOrdenAControl;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.OrdenFact;
+
 /**
  *
  * @author Roberto
@@ -13,6 +19,8 @@ public class JFListarOrdenesA extends javax.swing.JFrame {
     /**
      * Creates new form JFListarOrdenesA
      */
+    
+    private DefaultTableModel modelo=new DefaultTableModel() ;
     public JFListarOrdenesA() {
         initComponents();
     }
@@ -32,6 +40,11 @@ public class JFListarOrdenesA extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Listar Numeros de Orden");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,10 +86,10 @@ public class JFListarOrdenesA extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -86,6 +99,33 @@ public class JFListarOrdenesA extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        //listar ordenes de facturacion dictadas por ii
+           modelo=(DefaultTableModel) this.jTable1.getModel();
+        modelo.setRowCount(0);
+//        String apellido = jTextField2.getText();
+        IngresarNOrdenAControl nControl = new IngresarNOrdenAControl();
+        List<OrdenFact> nc = nControl.getAll();
+        if (nc.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No existe vendedores", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Object[] ordenes = new Object[5];
+            for (int i = 0; i <= nc.size() - 1; i++) {
+                OrdenFact od = nc.get(i);
+                ordenes[0] = i+1 ;
+                ordenes[1] = od.getNumOrden();
+                ordenes[2] = od.getLimiteInf();
+                ordenes[3] = od.getLimiteSup();
+                ordenes[4] = od.getFechaLimite().toString();
+//                vendedores[4] = ve.getCuenta();
+//                vendedores[5] = ve.getContrasenia();
+//                vendedores[6] = ve.getTurno();
+                modelo.addRow(ordenes);
+            }
+    }
+        
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

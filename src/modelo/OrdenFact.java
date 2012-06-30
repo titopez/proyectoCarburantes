@@ -13,6 +13,7 @@ public class OrdenFact implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
+<<<<<<< HEAD
     private long numOrden;
     private int limiteInf;
     private int limiteSup;
@@ -21,11 +22,22 @@ public class OrdenFact implements Serializable {
     @Transient
     private int contador;
     private byte estado;
+=======
+    protected long numOrden;
+    protected long limiteInf;
+    protected long limiteSup;
+    @Temporal(TemporalType.DATE)
+    protected Date fechaLimite;
+>>>>>>> 406152f489d6a4472d1527a9c6f8f2939c0020fb
     
     public OrdenFact() {
     }
 
+<<<<<<< HEAD
     public OrdenFact(long numOrden, int limiteInf, int limiteSup, Date fechaLimite, byte estado) {
+=======
+    public OrdenFact(long numOrden, long limiteInf, long limiteSup, Date fechaLimite) {
+>>>>>>> 406152f489d6a4472d1527a9c6f8f2939c0020fb
         this.numOrden = numOrden;
         this.limiteInf = limiteInf;
         this.limiteSup = limiteSup;
@@ -38,15 +50,20 @@ public class OrdenFact implements Serializable {
         return id;
     }
 
+<<<<<<< HEAD
+=======
+   
+
+>>>>>>> 406152f489d6a4472d1527a9c6f8f2939c0020fb
     public Date getFechaLimite() {
         return fechaLimite;
     }
 
-    public double getLimiteInf() {
+    public long getLimiteInf() {
         return limiteInf;
     }
 
-    public double getLimiteSup() {
+    public long getLimiteSup() {
         return limiteSup;
     }
 
@@ -58,11 +75,19 @@ public class OrdenFact implements Serializable {
         this.fechaLimite = fechaLimite;
     }
 
+<<<<<<< HEAD
     public void setLimiteInf(int limiteInf) {
         this.limiteInf = limiteInf;
     }
 
     public void setLimiteSup(int limiteSup) {
+=======
+    public void setLimiteInf(long limiteInf) {
+        this.limiteInf = limiteInf;
+    }
+
+    public void setLimiteSup(long limiteSup) {
+>>>>>>> 406152f489d6a4472d1527a9c6f8f2939c0020fb
         this.limiteSup = limiteSup;
     }
 

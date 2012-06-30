@@ -501,8 +501,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
           </Events>
+<<<<<<< HEAD
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+=======
+>>>>>>> 406152f489d6a4472d1527a9c6f8f2939c0020fb
         </Component>
       </SubComponents>
     </Container>
